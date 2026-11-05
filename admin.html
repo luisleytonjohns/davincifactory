@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de desarrollos | Davinci Factory</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  body{min-height:100vh;background:#0B2D3C}
+  .adm-login{min-height:100vh;display:grid;place-items:center;padding:1.5rem}
+  .adm-login[hidden]{display:none}
+  .adm-login__caja{width:min(420px,100%);border-radius:12px;padding:2rem 1.8rem;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+  .adm-login__caja img{width:84px;margin:0 auto 1rem}
+  .adm-login__caja .regla{margin-inline:auto}
+  .adm-login__caja .campo{text-align:left}
+  .adm-barra{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;justify-content:space-between;padding:1.6rem clamp(1rem,5.5vw,88px) 1rem}
+  .adm-barra .acciones{display:flex;gap:.7rem;flex-wrap:wrap}
+  .adm-barra .btn-sec{color:#E8EEF0;border-color:rgba(255,255,255,.35)}
+  .adm-ayuda{color:#c4d0d6;font-size:.88rem;padding:0 clamp(1rem,5.5vw,88px);margin:0 0 1.2rem;max-width:900px}
+  .adm-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;padding:0 clamp(1rem,5.5vw,88px) 3rem}
+  .adm-item{display:flex;flex-direction:column;gap:.55rem}
+  .adm-item .tarjeta{pointer-events:none}
+  .adm-item.oculto .tarjeta{opacity:.45;filter:grayscale(.6)}
+  .adm-meta{display:flex;justify-content:space-between;align-items:center;gap:.6rem;color:#c4d0d6;font-size:.8rem}
+  .adm-meta .btns{display:flex;gap:.45rem}
+  .adm-meta button{font:500 .8rem var(--fs);border-radius:5px;padding:.4rem .75rem;cursor:pointer;border:1px solid rgba(217,164,65,.6);background:rgba(217,164,65,.12);color:#F1C873}
+  .adm-meta button.borrar{border-color:rgba(230,110,90,.6);background:rgba(230,110,90,.1);color:#f3a493}
+  .etiqueta{display:inline-block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .45rem;border-radius:3px;background:rgba(255,255,255,.1)}
+  .etiqueta.no{background:rgba(230,110,90,.2);color:#f3a493}
+  .editor{width:min(980px,100%)}
+  .editor__grid{display:grid;grid-template-columns:1.2fr 1fr;gap:1.4rem}
+  .vista{background:#0B2D3C;border-radius:10px;padding:1rem}
+  .vista p{color:#c4d0d6;font-size:.78rem;margin:0 0 .6rem}
+  .contador{float:right;font-weight:400;color:#6b767c}
+  .contador.excede{color:#a23a2b}
+  .img-campo{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+  .img-campo img{width:84px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #cfd3d6;background:#0B2D3C}
+  .img-campo .quitar{font-size:.78rem;background:none;border:0;color:#a23a2b;cursor:pointer;text-decoration:underline}
+  .fila-check{display:flex;align-items:center;gap:.5rem;font-size:.86rem;color:#2b3840;margin:.4rem 0}
+  .fila-check input{accent-color:#0B2D3C;width:18px;height:18px}
+  .cargando{color:#c4d0d6;padding:0 clamp(1rem,5.5vw,88px)}
+  @media (max-width:820px){.editor__grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ===== Acceso ===== -->
+<section class="adm-login" id="vLogin">
+  <form class="adm-login__caja pergamino" id="formLogin">
+    <img src="img/logo.svg" alt="">
+    <h1 class="titulo">PANEL DE DESARROLLOS</h1>
+    <span class="regla"></span>
+    <label class="campo"><span class="etq">Clave de administración</span><input type="password" name="clave" required autocomplete="current-password"></label>
+    <button class="btn-oro" type="submit" style="width:100%">ENTRAR</button>
+    <p class="form-msg" id="loginMsg"></p>
+    <p style="font-size:.78rem;margin:.6rem 0 0"><a href="./">Volver al sitio</a></p>
+  </form>
+</section>
+
+<!-- ===== Panel ===== -->
+<section id="vPanel" hidden>
+  <header class="topbar">
+    <div class="topbar__in">
+      <a href="./" class="marca"><img src="img/logo.svg" alt="" class="marca__logo"><span class="marca__txt"><span>DAVINCI</span><span>FACTORY</span></span></a>
+    </div>
+  </header>
+  <div class="adm-barra">
+    <h1 class="titulo titulo--claro">DESARROLLOS PUBLICADOS</h1>
+    <div class="acciones">
+      <button class="btn-oro" id="btnNuevo">+ NUEVO DESARROLLO</button>
+      <button class="btn-sec" id="btnSalir">Salir</button>
+    </div>
+  </div>
+  <p class="adm-ayuda">Los desarrollos se muestran en el sitio ordenados por el campo «Orden» (de menor a mayor). Los marcados como ocultos no aparecen al público. Los cambios se ven en el sitio al recargar la página.</p>
+  <p class="cargando" id="cargando">Cargando…</p>
+  <div class="adm-lista" id="lista"></div>
+</section>
+
+<!-- ===== Editor ===== -->
+<div class="modal" id="modalEditor" hidden>
+  <div class="modal__fondo" data-cerrar></div>
+  <div class="modal__caja pergamino editor" role="dialog" aria-modal="true" aria-labelledby="edTitulo">
+    <button class="modal__x" data-cerrar aria-label="Cerrar">×</button>
+    <h2 class="titulo" id="edTitulo">NUEVO DESARROLLO</h2>
+    <span class="regla"></span>
+    <form id="formEd" novalidate>
+      <input type="hidden" name="id">
+      <div class="editor__grid">
+        <div>
+          <div class="rejilla2">
+            <label class="campo"><span class="etq">Nombre *</span><input name="nombre" required maxlength="60"></label>
+            <label class="campo"><span class="etq">Categoría</span><input name="categoria" maxlength="40" placeholder="Ej.: Educación"></label>
+          </div>
+          <label class="campo"><span class="etq">Descripción * <span class="contador" id="cont">0/110</span></span>
+            <textarea name="descripcion" required maxlength="300" style="min-height:70px"></textarea></label>
+          <label class="campo"><span class="etq">Sitio web (URL)</span><input name="url" type="url" maxlength="300" placeholder="https://"></label>
+          <div class="rejilla2">
+            <label class="campo"><span class="etq">Orden</span><input name="orden" type="number" min="0" step="1" value="10"></label>
+            <div class="campo"><span class="etq">Visibilidad</span><label class="fila-check"><input type="checkbox" name="visible" checked> Visible en el sitio</label></div>
+          </div>
+          <div class="campo"><span class="etq">Fotografía o captura (se ajusta a 1200 px)</span>
+            <div class="img-campo"><img id="prevFoto" alt="" hidden><input type="file" id="inFoto" accept="image/*"><button type="button" class="quitar" id="quitarFoto" hidden>Quitar</button></div></div>
+          <div class="campo"><span class="etq">Logo (opcional, reemplaza el nombre en la tarjeta)</span>
+            <div class="img-campo"><img id="prevLogo" alt="" hidden style="object-fit:contain"><input type="file" id="inLogo" accept="image/*"><button type="button" class="quitar" id="quitarLogo" hidden>Quitar</button></div></div>
+        </div>
+        <div>
+          <div class="vista"><p>Vista previa de la tarjeta</p><div id="vistaTarjeta"></div></div>
+        </div>
+      </div>
+      <div class="nav-pasos"><button type="button" class="btn-sec" data-cerrar>Cancelar</button><button type="submit" class="btn-oro" id="btnGuardar">GUARDAR</button></div>
+      <p class="form-msg" id="edMsg"></p>
+    </form>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
