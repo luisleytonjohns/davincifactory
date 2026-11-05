@@ -74,11 +74,11 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .quienes__txt p{margin:0;font-size:clamp(.9rem,1.08vw,1.04rem);line-height:1.4;color:#1a242b}
 .quienes__img{background-size:cover;background-position:center;mix-blend-mode:multiply;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 90%,transparent)}
-.ofrecemos{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.1rem clamp(1rem,2.4vw,36px)}
-.servicios{list-style:none;margin:0;padding:.6rem 0;display:grid;grid-template-columns:repeat(5,1fr)}
-.servicios li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.7rem;padding:.2rem .6rem;border-left:1px solid rgba(60,50,40,.28);font-size:clamp(.82rem,.98vw,.96rem);color:#1c252b;line-height:1.2}
+.ofrecemos{display:grid;grid-template-columns:auto 1fr;gap:.6rem;padding:1.1rem clamp(1rem,1.8vw,30px)}
+.servicios{list-style:none;margin:0;padding:.6rem 0;display:grid;grid-template-columns:repeat(6,1fr)}
+.servicios li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;padding:.2rem .35rem;border-left:1px solid rgba(60,50,40,.28);font-size:clamp(.8rem,.92vw,.94rem);color:#1c252b;line-height:1.2}
 .servicios li:first-child{border-left:0}
-.servicios svg{width:54px;height:54px;color:#121c22;stroke-width:1.5}
+.servicios svg{width:48px;height:48px;color:#121c22;stroke-width:1.5}
 
 /* ---------- Soluciones ---------- */
 .soluciones{padding:0}
@@ -87,7 +87,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .soluciones__txt p{margin:0;max-width:520px;color:#E9EEF0;font-size:clamp(.95rem,1.15vw,1.1rem)}
 .soluciones__img{background-size:cover;background-position:center;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 35%);mask-image:linear-gradient(90deg,transparent,#000 35%)}
-.capacidades{list-style:none;margin:1.6rem auto 0;padding:0 clamp(1rem,5.5vw,88px);display:grid;grid-template-columns:repeat(7,1fr);gap:.7rem}
+.capacidades{list-style:none;margin:1.6rem auto 0;padding:0 clamp(1rem,5.5vw,88px);display:grid;grid-template-columns:repeat(8,1fr);gap:.7rem}
 .capacidades li{background:#E9D6B6 url(../img/pergamino.jpg) center/cover;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.55rem;padding:1rem .5rem;color:#1c252b;font-size:.86rem;line-height:1.2;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .capacidades svg{width:40px;height:40px;color:#15232c;stroke-width:1.5}
 
@@ -205,8 +205,12 @@ a.tarjeta:hover .tarjeta__ir,a.tarjeta:focus .tarjeta__ir{opacity:1}
 .ok__folio{font-family:var(--ft);font-size:1.3rem;letter-spacing:.12em;color:var(--oro-cl)!important}
 
 /* ---------- Responsive ---------- */
-@media (max-width:1180px){
+@media (max-width:1400px){
   .fila-dos{grid-template-columns:1fr}
+  .quienes{grid-template-columns:1.4fr 1fr}
+  .ofrecemos{padding-left:clamp(1rem,4.2vw,64px)}
+}
+@media (max-width:1180px){
   .capacidades{grid-template-columns:repeat(4,1fr)}
   .requerimiento{grid-template-columns:1fr}
   .req__lado{max-width:640px}
